@@ -1,37 +1,36 @@
-import React from 'react';
+import React from "react";
 import {
   Box,
   VStack,
   Button,
+  Image,
   Center,
   ButtonText,
-  Link
-} from '@gluestack-ui/themed';
+  Link,
+} from "@gluestack-ui/themed";
 
-import GuestLayout from '../../layouts/GuestLayout';
+import GuestLayout from "../../layouts/GuestLayout";
 
-// Importing the styled version of 'next/image'
-import Image from '@/components/StyledImage';
-
+// to render login and sign up buttons
 function ActionButtons() {
   return (
     <VStack
-      space={'xs'}
-      mt={'$10'}
+      space="xs"
+      mt="$10"
       sx={{
-        '@md': {
-          mt: '$12',
+        "@md": {
+          mt: "$12",
         },
       }}
     >
       <Button
         sx={{
-          ':hover': {
-            bg: '$backgroundLight100',
+          ":hover": {
+            bg: "$backgroundLight100",
             _text: {
-              color: '$primary500',
-              textDecorationLine: 'none',
-              fontWeight: '$bold',
+              color: "$primary500",
+              textDecorationLine: "none",
+              fontWeight: "$bold",
             },
           },
         }}
@@ -45,8 +44,8 @@ function ActionButtons() {
         <Link href="/login">
           <ButtonText
             sx={{
-              textDecorationLine: 'none',
-              fontWeight: '$bold',
+              textDecorationLine: "none",
+              fontWeight: "$bold",
             }}
             textDecorationLine="none"
             color="$primary500"
@@ -58,12 +57,12 @@ function ActionButtons() {
 
       <Button
         sx={{
-          ':hover': {
-            bg: '$white',
+          ":hover": {
+            bg: "$backgroundLight0",
             _text: {
-              color: '$primary500',
-              textDecorationLine: 'none',
-              fontWeight: '$bold',
+              color: "$primary500",
+              textDecorationLine: "none",
+              fontWeight: "$bold",
             },
           },
         }}
@@ -88,30 +87,29 @@ function ActionButtons() {
 function HeaderLogo() {
   return (
     <Box alignItems="center" justifyContent="center">
-      {/* Image for the bigger screens (Desktop browsers) */}
       <Image
         h="$10"
         w="$80"
         alt="gluestack-ui Pro"
-        src={require('./assets/images/gluestackUiProLogo_web_light.svg')}
+        resizeMode="contain"
+        source={require("./assets/images/gluestackUiProLogo_web_light.svg")}
         sx={{
-          '@md': {
-            display: 'flex',
+          "@md": {
+            display: "flex",
           },
         }}
         display="none"
       />
 
-      {/* Image for the smaller screens (mobile phone apps and mobile phone browsers) */}
       <Image
         sx={{
-          '@md': {
-            display: 'none',
+          "@md": {
+            display: "none",
           },
         }}
         alt="gluestack-ui Pro"
         display="flex"
-        src={require('./assets/images/gluestackUiProLogo_mobile.png')}
+        source={require("./assets/images/gluestackUiProLogo_mobile.png")}
         w="$275"
         h="$141"
       />
@@ -121,16 +119,17 @@ function HeaderLogo() {
 
 export default function SplashScreen() {
   return (
+    // place GluestackUIProvider in your app root accordingly
     <GuestLayout>
       <Center w="$full" flex={1}>
         <Box
           maxWidth="$boxSize"
           w="$full"
+          minHeight="$authcard"
           sx={{
-            '@md': {
-              h: '$544',
-              px: '$8',
-              bg: '$primary500',
+            "@md": {
+              px: "$8",
+              bg: "$primary500",
             },
           }}
           px="$4"

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Button,
   Checkbox,
+  Image,
   HStack,
   VStack,
+  ScrollView,
   Text,
   Link,
   Divider,
@@ -30,59 +32,56 @@ import {
   Heading,
   ArrowLeftIcon,
   InputField,
-} from '@gluestack-ui/themed';
-import { Controller, useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
+  InputSlot,
+} from "@gluestack-ui/themed";
+import { Controller, useForm } from "react-hook-form";
 
-import { AlertTriangle, EyeIcon, EyeOffIcon } from 'lucide-react-native';
-import { FacebookIcon, GoogleIcon } from './assets/Icons/Social';
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Keyboard } from 'react-native';
+import { AlertTriangle, EyeIcon, EyeOffIcon } from "lucide-react-native";
 
-import GuestLayout from '../../layouts/GuestLayout';
+import { FacebookIcon, GoogleIcon } from "./assets/Icons/Social";
+import { Keyboard } from "react-native";
 
-import Image from '../../components/StyledImage';
-
-import { useRouter } from 'next/navigation';
+import GuestLayout from "../../layouts/GuestLayout";
+import { useRouter } from "next/navigation";
 
 const signUpSchema = z.object({
-  email: z.string().min(1, 'Email is required').email(),
+  email: z.string().min(1, "Email is required").email(),
   password: z
     .string()
-    .min(6, 'Must be at least 8 characters in length')
-    .regex(new RegExp('.*[A-Z].*'), 'One uppercase character')
-    .regex(new RegExp('.*[a-z].*'), 'One lowercase character')
-    .regex(new RegExp('.*\\d.*'), 'One number')
+    .min(6, "Must be at least 8 characters in length")
+    .regex(new RegExp(".*[A-Z].*"), "One uppercase character")
+    .regex(new RegExp(".*[a-z].*"), "One lowercase character")
+    .regex(new RegExp(".*\\d.*"), "One number")
     .regex(
-      new RegExp('.*[`~<>?,./!@#$%^&*()\\-_+="\'|{}\\[\\];:\\\\].*'),
-      'One special character'
+      new RegExp(".*[`~<>?,./!@#$%^&*()\\-_+=\"'|{}\\[\\];:\\\\].*"),
+      "One special character"
     ),
   confirmpassword: z
     .string()
-    .min(6, 'Must be at least 8 characters in length')
-    .regex(new RegExp('.*[A-Z].*'), 'One uppercase character')
-    .regex(new RegExp('.*[a-z].*'), 'One lowercase character')
-    .regex(new RegExp('.*\\d.*'), 'One number')
+    .min(6, "Must be at least 8 characters in length")
+    .regex(new RegExp(".*[A-Z].*"), "One uppercase character")
+    .regex(new RegExp(".*[a-z].*"), "One lowercase character")
+    .regex(new RegExp(".*\\d.*"), "One number")
     .regex(
-      new RegExp('.*[`~<>?,./!@#$%^&*()\\-_+="\'|{}\\[\\];:\\\\].*'),
-      'One special character'
+      new RegExp(".*[`~<>?,./!@#$%^&*()\\-_+=\"'|{}\\[\\];:\\\\].*"),
+      "One special character"
     ),
   rememberme: z.boolean().optional(),
 });
-
 type SignUpSchemaType = z.infer<typeof signUpSchema>;
-
 function SideContainerWeb() {
   return (
     <Center
       flex={1}
       sx={{
         _light: {
-          bg: '$primary500',
+          bg: "$primary500",
         },
         _dark: {
-          bg: '$primary500',
+          bg: "$primary500",
         },
       }}
     >
@@ -90,13 +89,12 @@ function SideContainerWeb() {
         h="$10"
         w="$80"
         alt="gluestack-ui Pro"
-        // resizeMode="contain"
-        src={require('./assets/images/gluestackUiProLogo_web_light.svg')}
+        resizeMode="contain"
+        source={require("./assets/images/gluestackUiProLogo_web_light.svg")}
       />
     </Center>
   );
 }
-
 function MobileHeader() {
   return (
     <VStack px="$3" mt="$4.5" mb="$5" space="md">
@@ -117,10 +115,10 @@ function MobileHeader() {
           fontWeight="normal"
           sx={{
             _light: {
-              color: '$primary300',
+              color: "$primary300",
             },
             _dark: {
-              color: '$textDark400',
+              color: "$textDark400",
             },
           }}
         >
@@ -130,7 +128,6 @@ function MobileHeader() {
     </VStack>
   );
 }
-
 const SignUpForm = () => {
   const {
     control,
@@ -142,15 +139,12 @@ const SignUpForm = () => {
   });
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [pwMatched, setPwMatched] = useState(false);
-
-  const router = useRouter();
   const toast = useToast();
-
   const onSubmit = (_data: SignUpSchemaType) => {
     if (_data.password === _data.confirmpassword) {
       setPwMatched(true);
       toast.show({
-        placement: 'bottom right',
+        placement: "bottom right",
         render: ({ id }) => {
           return (
             <Toast nativeID={id} variant="accent" action="success">
@@ -159,12 +153,10 @@ const SignUpForm = () => {
           );
         },
       });
-
       reset();
-
     } else {
       toast.show({
-        placement: 'bottom right',
+        placement: "bottom right",
         render: ({ id }) => {
           return (
             <Toast nativeID={id} action="error">
@@ -174,9 +166,7 @@ const SignUpForm = () => {
         },
       });
     }
-
     // Implement your own onSubmit and navigation logic here.
-    router.push('/login');
   };
   const handleKeyPress = () => {
     Keyboard.dismiss();
@@ -203,6 +193,7 @@ const SignUpForm = () => {
         >
           <Controller
             name="email"
+            defaultValue=""
             control={control}
             rules={{
               validate: async (value) => {
@@ -238,6 +229,7 @@ const SignUpForm = () => {
         </FormControl>
         <FormControl isInvalid={!!errors.password} isRequired={true} my="$6">
           <Controller
+            defaultValue=""
             name="password"
             control={control}
             rules={{
@@ -262,11 +254,14 @@ const SignUpForm = () => {
                   onBlur={onBlur}
                   onSubmitEditing={handleKeyPress}
                   returnKeyType="done"
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                 />
-                <InputIcon pr="$3" onPress={handleState}>
-                  <Icon as={showPassword ? EyeIcon : EyeOffIcon} color="gray" />
-                </InputIcon>
+                <InputSlot onPress={handleState} pr="$3">
+                  <InputIcon
+                    as={showPassword ? EyeIcon : EyeOffIcon}
+                    color="$textDark400"
+                  />
+                </InputSlot>
               </Input>
             )}
           />
@@ -278,8 +273,9 @@ const SignUpForm = () => {
           </FormControlError>
           <FormControlHelper></FormControlHelper>
         </FormControl>
-        <FormControl isInvalid={!!errors.password} isRequired={true}>
+        <FormControl isInvalid={!!errors.confirmpassword} isRequired={true}>
           <Controller
+            defaultValue=""
             name="confirmpassword"
             control={control}
             rules={{
@@ -304,32 +300,24 @@ const SignUpForm = () => {
                   onBlur={onBlur}
                   onSubmitEditing={handleKeyPress}
                   returnKeyType="done"
-                  type={showConfirmPassword ? 'text' : 'password'}
+                  type={showConfirmPassword ? "text" : "password"}
                 />
-                <InputIcon pr="$3" onPress={handleConfirmPwState}>
-                  <Icon
+
+                <InputSlot onPress={handleConfirmPwState} pr="$3">
+                  <InputIcon
                     as={showConfirmPassword ? EyeIcon : EyeOffIcon}
-                    color="gray"
+                    color="$textDark400"
                   />
-                </InputIcon>
+                </InputSlot>
               </Input>
             )}
           />
           <FormControlError>
             <FormControlErrorIcon size="sm" as={AlertTriangle} />
             <FormControlErrorText>
-              {errors?.password?.message}
+              {errors?.confirmpassword?.message}
             </FormControlErrorText>
           </FormControlError>
-          {!errors?.password?.message && !pwMatched ? (
-            <FormControlError>
-              <FormControlErrorIcon size="sm" as={AlertTriangle} />
-              <FormControlErrorText>
-                <Text>Passwords must be same</Text>
-              </FormControlErrorText>
-            </FormControlError>
-          ) : null}
-          <FormControlHelper></FormControlHelper>
         </FormControl>
       </VStack>
       <Controller
@@ -350,33 +338,30 @@ const SignUpForm = () => {
             </CheckboxIndicator>
             <CheckboxLabel
               sx={{
-                _dark: { color: '$warmGray400' },
+                _dark: { color: "$warmGray400" },
                 _text: {
-                  // lineHeight: 24,
-                  fontSize: '$sm',
+                  fontSize: "$sm",
                 },
               }}
             >
               I accept the
               <Link mb={-1}>
                 <LinkText
-                  // lineHeight={'$2xs'}
                   fontSize="$sm"
                   textDecorationLine="none"
                   color="$primary500"
                 >
-                  {' Terms of Use '}
+                  Terms of Use
                 </LinkText>
-              </Link>
-              &
+              </Link>{" "}
+              &{" "}
               <Link mb={-1}>
                 <LinkText
                   color="$primary500"
                   textDecorationLine="none"
-                  // lineHeight={12.5}
                   fontSize="$sm"
                 >
-                  {' Privacy Policy '}
+                  Privacy Policy
                 </LinkText>
               </Link>
             </CheckboxLabel>
@@ -391,14 +376,13 @@ const SignUpForm = () => {
     </>
   );
 };
-
 function SignUpFormComponent() {
   return (
     <>
       <Box
         sx={{
-          '@md': {
-            display: 'none',
+          "@md": {
+            display: "none",
           },
         }}
         display="flex"
@@ -408,17 +392,17 @@ function SignUpFormComponent() {
       <Box
         flex={1}
         sx={{
-          '@md': {
-            px: '$8',
-            borderTopLeftRadius: '$none',
-            borderTopRightRadius: '$none',
-            borderBottomRightRadius: '$none',
+          "@md": {
+            px: "$8",
+            borderTopLeftRadius: "$none",
+            borderTopRightRadius: "$none",
+            borderBottomRightRadius: "$none",
           },
-          '_light': {
-            bg: '$backgroundLight0',
+          _light: {
+            bg: "$backgroundLight0",
           },
-          '_dark': {
-            bg: '$backgroundDark800',
+          _dark: {
+            bg: "$backgroundDark800",
           },
         }}
         px="$4"
@@ -430,14 +414,14 @@ function SignUpFormComponent() {
       >
         <Text
           sx={{
-            '@md': {
-              display: 'flex',
+            "@md": {
+              display: "flex",
             },
-            '_light': {
-              color: '$textLight800',
+            _light: {
+              color: "$textLight800",
             },
-            '_dark': {
-              color: '$textDark50',
+            _dark: {
+              color: "$textDark50",
             },
           }}
           display="none"
@@ -451,8 +435,8 @@ function SignUpFormComponent() {
         <HStack
           space="xs"
           sx={{
-            '@md': {
-              mt: '$4',
+            "@md": {
+              mt: "$4",
             },
           }}
           mt="$6"
@@ -463,10 +447,10 @@ function SignUpFormComponent() {
             w="$2/6"
             sx={{
               _light: {
-                bg: '$backgroundLight200',
+                bg: "$backgroundLight200",
               },
               _dark: {
-                bg: '$backgroundDark700',
+                bg: "$backgroundDark700",
               },
             }}
           />
@@ -474,10 +458,10 @@ function SignUpFormComponent() {
             fontWeight="medium"
             sx={{
               _light: {
-                color: '$textlight400',
+                color: "$textlight400",
               },
               _dark: {
-                color: '$textdark300',
+                color: "$textdark300",
               },
             }}
           >
@@ -487,10 +471,10 @@ function SignUpFormComponent() {
             w="$2/6"
             sx={{
               _light: {
-                bg: '$backgroundLight200',
+                bg: "$backgroundLight200",
               },
               _dark: {
-                bg: '$backgroundDark700',
+                bg: "$backgroundDark700",
               },
             }}
           />
@@ -498,8 +482,8 @@ function SignUpFormComponent() {
         <HStack
           space="sm"
           sx={{
-            '@md': {
-              mt: '$4',
+            "@md": {
+              mt: "$4",
             },
           }}
           mt="$6"
@@ -530,7 +514,7 @@ function SignUpFormComponent() {
             fontWeight="normal"
             sx={{
               _dark: {
-                color: '$textDark400',
+                color: "$textDark400",
               },
             }}
           >
@@ -539,10 +523,10 @@ function SignUpFormComponent() {
           <Link href="">
             <LinkText
               sx={{
-                'color': '$primary500',
-                'textDecorationLine': 'none',
-                ':hover': { color: '$primary600' },
-                'fontWeight': '$bold',
+                color: "$primary500",
+                textDecorationLine: "none",
+                ":hover": { color: "$primary600" },
+                fontWeight: "$bold",
               }}
               fontSize="$sm"
             >
@@ -559,8 +543,8 @@ export default function SignUp() {
     <GuestLayout>
       <Box
         sx={{
-          '@md': {
-            display: 'flex',
+          "@md": {
+            display: "flex",
           },
         }}
         flex={1}

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState } from "react";
 import {
   VStack,
   Box,
@@ -6,6 +6,7 @@ import {
   Icon,
   Text,
   Button,
+  Image,
   Center,
   FormControl,
   Input,
@@ -15,33 +16,41 @@ import {
   InputField,
   ButtonText,
   ArrowLeftIcon,
-} from '@gluestack-ui/themed';
+  FormControlError,
+  FormControlErrorIcon,
+  FormControlErrorText,
+  Toast,
+  ToastTitle,
+  useToast,
+} from "@gluestack-ui/themed";
 
-import GuestLayout from '../../layouts/GuestLayout';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
-import Image from '../../components/StyledImage';
+import { Keyboard } from "react-native";
 
-import { useRouter } from 'next/navigation';
+import { AlertTriangle } from "lucide-react-native";
 
-function PinInput() {
-  const firstInput = useRef<HTMLDivElement>(null);
-  const secondInput = useRef<HTMLDivElement>(null);
-  const thirdInput = useRef<HTMLDivElement>();
-  const fourthInput = useRef<HTMLDivElement>();
-  const fifthInput = useRef<HTMLDivElement>();
-  const sixthInput = useRef<HTMLDivElement>();
+import GuestLayout from "../../layouts/GuestLayout";
 
-  const refList = [
-    firstInput,
-    secondInput,
-    thirdInput,
-    fourthInput,
-    fifthInput,
-    sixthInput,
-  ];
+import { useRouter } from "next/navigation";
 
-  const [inputFocus, setInputFocus] = useState<number>(-1);
+interface PinInputProps {
+  refList: React.RefObject<HTMLInputElement>[];
+  setInputFocus: React.Dispatch<React.SetStateAction<number>>;
+  focusedIndex: number;
+  setOtpInput: (otpInput: Array<string>) => void;
+  otpInput: any;
+}
 
+function PinInput({
+  refList,
+  setInputFocus,
+  focusedIndex,
+  setOtpInput,
+  otpInput,
+}: PinInputProps) {
   return (
     <HStack space="xs">
       {Array.from({ length: 6 }, (_, index) => (
@@ -55,28 +64,28 @@ function PinInput() {
           isReadOnly={false}
         >
           <InputField
+            //@ts-ignore
             ref={refList[index]}
             placeholder=""
             sx={{
-              '@md': {
-                w: '$1/6',
+              "@md": {
+                w: "$1/6",
               },
-              '@lg': {
-                w: '$25/2',
+              "@lg": {
+                w: "$25/2",
               },
-              '_light': {
-                color: '$textLight800',
+              _light: {
+                color: "$textLight800",
                 borderBottomColor:
-                  inputFocus === index ? '$primary900' : '$borderLight500',
+                  focusedIndex === index ? "$primary900" : "$borderLight500",
               },
-              '_dark': {
-                bgColor: '$textDark400',
+              _dark: {
+                bgColor: "$textDark400",
                 borderBottomColor:
-                  inputFocus === index ? '$primary500' : '$borderDark100',
+                  focusedIndex === index ? "$primary500" : "$borderDark100",
               },
             }}
             w="$100/7"
-            // ref={refList[index]}
             textAlign="center"
             maxLength={1}
             borderBottomWidth="$2"
@@ -87,6 +96,13 @@ function PinInput() {
               } else if (text.length === 0 && index > 0) {
                 refList[index - 1].current?.focus();
               }
+
+              const updateOtpAtIndex = (index: number, value: string) => {
+                const newOtpInput = [...otpInput];
+                newOtpInput[index] = value;
+                setOtpInput(newOtpInput);
+              };
+              updateOtpAtIndex(index, text);
             }}
             rounded="$xs"
           />
@@ -103,26 +119,24 @@ function Header() {
         <Icon as={ArrowLeftIcon} color="$textLight50" />
       </Link>
       <Text color="$textLight50" fontSize="$lg">
-        {' '}
         OTP Verification
       </Text>
     </HStack>
   );
 }
-
 function SideContainerWeb() {
   return (
     <Center
       flex={1}
       sx={{
-        '@md': {
-          px: '$8',
+        "@md": {
+          px: "$8",
         },
-        '_dark': {
-          bg: '$primary500',
+        _dark: {
+          bg: "$primary500",
         },
-        '_light': {
-          bg: '$primary500',
+        _light: {
+          bg: "$primary500",
         },
       }}
       px="$4"
@@ -131,26 +145,26 @@ function SideContainerWeb() {
         h="$10"
         w="$80"
         alt="gluestack-ui Pro"
-        src={require('./assets/images/gluestackUiProLogo_web_light.svg')}
+        resizeMode="contain"
+        source={require("./assets/images/gluestackUiProLogo_web_light.svg")}
       />
     </Center>
   );
 }
-
 function MainText() {
   return (
     <VStack space="xs">
       <Text
         sx={{
-          '@md': {
-            fontSize: '$2xl',
-            pb: '$4',
+          "@md": {
+            fontSize: "$2xl",
+            pb: "$4",
           },
-          '_light': {
-            color: '$textLight800',
+          _light: {
+            color: "$textLight800",
           },
-          '_dark': {
-            color: '$textDark50',
+          _dark: {
+            color: "$textDark50",
           },
         }}
         fontSize="$xl"
@@ -161,14 +175,14 @@ function MainText() {
       <HStack space="xs" alignItems="center">
         <Text
           sx={{
-            '@md': {
-              pb: '$12',
+            "@md": {
+              pb: "$12",
             },
-            '_light': {
-              color: '$textLight800',
+            _light: {
+              color: "$textLight800",
             },
-            '_dark': {
-              color: '$textDark400',
+            _dark: {
+              color: "$textDark400",
             },
           }}
           fontSize="$sm"
@@ -178,28 +192,27 @@ function MainText() {
             fontWeight="bold"
             sx={{
               _light: {
-                color: '$textLight800',
+                color: "$textLight800",
               },
               _dark: {
-                color: '$textDark400',
+                color: "$textDark400",
               },
             }}
             fontSize="$sm"
           >
-            {''} 87******47
+            87******47
           </Text>
         </Text>
       </HStack>
     </VStack>
   );
 }
-
 function AccountLink() {
   return (
     <HStack
       sx={{
-        '@md': {
-          mt: '$40',
+        "@md": {
+          mt: "$40",
         },
       }}
       mt="auto"
@@ -210,10 +223,10 @@ function AccountLink() {
       <Text
         sx={{
           _light: {
-            color: '$textLight800',
+            color: "$textLight800",
           },
           _dark: {
-            color: '$textDark400',
+            color: "$textDark400",
           },
         }}
         fontSize="$sm"
@@ -225,10 +238,10 @@ function AccountLink() {
         href="/login"
         sx={{
           _text: {
-            'color': '$primary500',
-            'textDecorationLine': 'none',
-            ':hover': { color: '$primary600' },
-            'fontWeight': '$bold',
+            color: "$primary500",
+            textDecorationLine: "none",
+            ":hover": { color: "$primary600" },
+            fontWeight: "$bold",
           },
         }}
       >
@@ -237,31 +250,30 @@ function AccountLink() {
     </HStack>
   );
 }
-
 function ResendLink() {
   return (
     <HStack py="$8">
       <Text
         sx={{
           _light: {
-            color: '$textLight800',
+            color: "$textLight800",
           },
           _dark: {
-            color: '$textDark400',
+            color: "$textDark400",
           },
         }}
         fontSize="$sm"
       >
-        Didn't receive the OTP?{' '}
+        Didn't receive the OTP?
       </Text>
       <Link
         href=""
         sx={{
           _text: {
-            'color': '$primary500',
-            'textDecorationLine': 'none',
-            ':hover': { color: '$primary600' },
-            'fontWeight': '$bold',
+            color: "$primary500",
+            textDecorationLine: "none",
+            ":hover": { color: "$primary600" },
+            fontWeight: "$bold",
           },
         }}
       >
@@ -271,22 +283,77 @@ function ResendLink() {
   );
 }
 
+const OTPSchema = z.object({
+  OTP: z.string().min(6, "OTP must be at least 6 characters in length"),
+});
+
+type OTPSchemaType = z.infer<typeof OTPSchema>;
+
 export default function OtpVerification() {
+  const {
+    formState: { errors },
+    handleSubmit,
+    reset,
+  } = useForm<OTPSchemaType>({
+    resolver: zodResolver(OTPSchema),
+  });
+
+  const [otpInput, setOtpInput] = useState(["", "", "", "", "", ""]);
+  const firstInput = useRef<HTMLInputElement>(null);
+  const secondInput = useRef<HTMLInputElement>(null);
+  const thirdInput = useRef<HTMLInputElement>(null);
+  const fourthInput = useRef<HTMLInputElement>(null);
+  const fifthInput = useRef<HTMLInputElement>(null);
+  const sixthInput = useRef<HTMLInputElement>(null);
+
+  const refList = [
+    firstInput,
+    secondInput,
+    thirdInput,
+    fourthInput,
+    fifthInput,
+    sixthInput,
+  ];
+
+  const [inputFocus, setInputFocus] = useState<number>(-1);
+  const [validationError, setValidationError] = useState<string | null>(null);
 
   const router = useRouter();
+  const toast = useToast();
 
-  function onsubmit() {
-    // implement validation logic here
+  const onSubmit = () => {
     // implement navigation logic here
-    router.replace('/create-password');
-  }
+    router.replace("/create-password");
+
+    toast.show({
+      placement: "bottom right",
+      render: ({ id }) => {
+        const pinValues = refList.map((ref) => ref?.current?.value);
+        const pin = pinValues.join("");
+        const Count = otpInput.filter((value) => value !== "").length;
+
+        if (Count < 6) {
+          setValidationError("OTP must be at least 6 characters in length");
+          return;
+        }
+        setValidationError(null);
+
+        return (
+          <Toast nativeID={id} variant="accent" action="success">
+            <ToastTitle>OTP sent successfully</ToastTitle>
+          </Toast>
+        );
+      },
+    });
+    reset();
+  };
 
   return (
     <GuestLayout>
       <Box
         sx={{
-          '@md': {
-            display: 'none',
+          "@md": {
+            display: "none",
           },
         }}
         display="flex"
@@ -295,8 +362,8 @@ export default function OtpVerification() {
       </Box>
       <Box
         sx={{
-          '@md': {
-            display: 'flex',
+          "@md": {
+            display: "flex",
           },
         }}
         display="none"
@@ -306,15 +373,15 @@ export default function OtpVerification() {
       </Box>
       <Box
         sx={{
-          '@md': {
-            py: '$8',
-            px: '$8',
+          "@md": {
+            py: "$8",
+            px: "$8",
           },
-          '_light': {
-            bg: '$backgroundLight0',
+          _light: {
+            bg: "$backgroundLight0",
           },
-          '_dark': {
-            bg: '$backgroundDark800',
+          _dark: {
+            bg: "$backgroundDark800",
           },
         }}
         py="$8"
@@ -325,20 +392,39 @@ export default function OtpVerification() {
           <MainText />
           <VStack space="md" mt="$6">
             <FormControl>
-              <PinInput />
+              <PinInput
+                refList={refList}
+                setInputFocus={setInputFocus}
+                focusedIndex={inputFocus}
+                otpInput={otpInput}
+                setOtpInput={setOtpInput}
+              />
+              {validationError && (
+                <Text fontSize="$sm" color="$red700">
+                  {validationError}
+                </Text>
+              )}
               <FormControlHelperText mt="$8">
                 <ResendLink />
               </FormControlHelperText>
+
+              <FormControlError>
+                <FormControlErrorIcon as={AlertTriangle} size="md" />
+                <FormControlErrorText>
+                  {errors?.OTP?.message}
+                </FormControlErrorText>
+              </FormControlError>
             </FormControl>
+
             <Button
               size="lg"
               variant="solid"
               action="primary"
               isDisabled={false}
               isFocusVisible={false}
-              onPress={() => onsubmit()}
+              onPress={() => onSubmit()}
             >
-              <ButtonText fontSize="$sm">PROCEED</ButtonText>
+              <ButtonText fontSize="$sm">PROCEED </ButtonText>
             </Button>
           </VStack>
         </Box>
