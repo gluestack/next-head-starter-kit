@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box, StatusBar, ScrollView, VStack } from '@gluestack-ui/themed';
+import React from "react";
+import { Box, StatusBar, ScrollView, VStack } from "@gluestack-ui/themed";
 
 type GuestLayoutProps = {
   children: React.ReactNode;
@@ -10,11 +10,11 @@ export default function GuestLayout(props: GuestLayoutProps) {
     <Box
       sx={{
         _web: {
-          height: '100vh',
-          overflow: 'hidden',
+          height: "100vh",
+          overflow: "hidden",
         },
       }}
-      height="100%"
+      height="$full"
     >
       <StatusBar
         translucent
@@ -24,14 +24,14 @@ export default function GuestLayout(props: GuestLayoutProps) {
       <ScrollView
         flex={1}
         contentContainerStyle={{
-          alignItems: 'center',
+          alignItems: "center",
           flexGrow: 1,
-          justifyContent: 'center',
+          justifyContent: "center",
         }}
         sx={{
-          '@base': { _light: { bg: '$primary500' } },
-          '@md': { _light: { bg: '$primary900' }, p: '$8' },
-          '_dark': { bg: '$backgroundDark900' },
+          "@base": { _light: { bg: "$primary500" } },
+          "@md": { _light: { bg: "$primary900" }, p: "$8" },
+          _dark: { bg: "$backgroundDark900" },
         }}
         bounces={false}
       >
@@ -40,10 +40,10 @@ export default function GuestLayout(props: GuestLayoutProps) {
           flex={1}
           overflow="hidden"
           sx={{
-            '@md': {
-              maxWidth: 1016,
-              flexDirection: 'row',
-              rounded: '$xl',
+            "@md": {
+              maxWidth: "$containerWidth",
+              flexDirection: "row",
+              rounded: "$xl",
               flex: undefined,
             },
           }}
