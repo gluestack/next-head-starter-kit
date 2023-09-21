@@ -322,9 +322,6 @@ export default function OtpVerification() {
   const toast = useToast();
 
   const onSubmit = () => {
-    // implement navigation logic here
-    router.replace("/create-password");
-
     toast.show({
       placement: "bottom right",
       render: ({ id }) => {
@@ -336,6 +333,9 @@ export default function OtpVerification() {
           setValidationError("OTP must be at least 6 characters in length");
           return;
         }
+
+        // implement navigation logic here
+        router.replace("/create-password");
         setValidationError(null);
 
         return (

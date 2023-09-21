@@ -520,7 +520,7 @@ function SignUpFormComponent() {
           >
             Already have an account?
           </Text>
-          <Link href="">
+          <Link href="/login">
             <LinkText
               sx={{
                 color: "$primary500",
