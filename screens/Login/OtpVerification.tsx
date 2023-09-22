@@ -22,6 +22,7 @@ import {
   Toast,
   ToastTitle,
   useToast,
+  Heading,
 } from "@gluestack-ui/themed";
 
 import { useForm } from "react-hook-form";
@@ -54,19 +55,15 @@ function PinInput({
   return (
     <HStack space="xs">
       {Array.from({ length: 6 }, (_, index) => (
-        <Input
-          key={index}
-          variant="outline"
-          w="$100/7"
-          size="md"
-          isDisabled={false}
-          isInvalid={false}
-          isReadOnly={false}
-        >
+        <Input key={index} variant="outline" w="$100/7" size="md">
           <InputField
             //@ts-ignore
             ref={refList[index]}
             placeholder=""
+            borderBottomColor={
+              focusedIndex === index ? "$primary900" : "$borderLight500"
+            }
+            bg="$backgroundLight0"
             sx={{
               "@md": {
                 w: "$1/6",
@@ -74,13 +71,8 @@ function PinInput({
               "@lg": {
                 w: "$25/2",
               },
-              _light: {
-                color: "$textLight800",
-                borderBottomColor:
-                  focusedIndex === index ? "$primary900" : "$borderLight500",
-              },
               _dark: {
-                bgColor: "$textDark400",
+                bgColor: "$backgroundDark400",
                 borderBottomColor:
                   focusedIndex === index ? "$primary500" : "$borderDark100",
               },
@@ -116,9 +108,17 @@ function Header() {
   return (
     <HStack space="xs" px="$3" my="$4.5" alignItems="center">
       <Link>
-        <Icon as={ArrowLeftIcon} color="$textLight50" />
+        <Icon
+          as={ArrowLeftIcon}
+          color="$textLight50"
+          sx={{ _dark: { color: "$textDark50" } }}
+        />
       </Link>
-      <Text color="$textLight50" fontSize="$lg">
+      <Text
+        color="$textLight50"
+        fontSize="$lg"
+        sx={{ _dark: { color: "$textDark50" } }}
+      >
         OTP Verification
       </Text>
     </HStack>
@@ -128,18 +128,12 @@ function SideContainerWeb() {
   return (
     <Center
       flex={1}
+      bg="$primary500"
       sx={{
-        "@md": {
-          px: "$8",
-        },
         _dark: {
           bg: "$primary500",
         },
-        _light: {
-          bg: "$primary500",
-        },
       }}
-      px="$4"
     >
       <Image
         h="$10"
@@ -151,35 +145,24 @@ function SideContainerWeb() {
     </Center>
   );
 }
+
 function MainText() {
   return (
     <VStack space="xs">
-      <Text
-        sx={{
-          "@md": {
-            fontSize: "$2xl",
-            pb: "$4",
-          },
-          _light: {
-            color: "$textLight800",
-          },
-          _dark: {
-            color: "$textDark50",
-          },
-        }}
+      <Heading
         fontSize="$xl"
-        fontWeight="bold"
+        sx={{
+          "@md": { fontSize: "$2xl", pb: "$4" },
+        }}
       >
         Enter OTP
-      </Text>
+      </Heading>
       <HStack space="xs" alignItems="center">
         <Text
+          color="$textLight800"
           sx={{
             "@md": {
               pb: "$12",
-            },
-            _light: {
-              color: "$textLight800",
             },
             _dark: {
               color: "$textDark400",
@@ -189,18 +172,16 @@ function MainText() {
         >
           We have sent the OTP code to
           <Text
-            fontWeight="bold"
+            fontWeight="$bold"
+            color="$textLight800"
             sx={{
-              _light: {
-                color: "$textLight800",
-              },
               _dark: {
                 color: "$textDark400",
               },
             }}
             fontSize="$sm"
           >
-            87******47
+            {} 87******47
           </Text>
         </Text>
       </HStack>
@@ -221,30 +202,17 @@ function AccountLink() {
       justifyContent="center"
     >
       <Text
+        color="$textLight800"
         sx={{
-          _light: {
-            color: "$textLight800",
-          },
           _dark: {
             color: "$textDark400",
           },
         }}
         fontSize="$sm"
-        fontWeight="normal"
       >
         Already have an account?
       </Text>
-      <Link
-        href="/login"
-        sx={{
-          _text: {
-            color: "$primary500",
-            textDecorationLine: "none",
-            ":hover": { color: "$primary600" },
-            fontWeight: "$bold",
-          },
-        }}
-      >
+      <Link href="/login">
         <LinkText fontSize="$sm">Sign In</LinkText>
       </Link>
     </HStack>
@@ -254,29 +222,17 @@ function ResendLink() {
   return (
     <HStack py="$8">
       <Text
+        color="$textLight800"
         sx={{
-          _light: {
-            color: "$textLight800",
-          },
           _dark: {
             color: "$textDark400",
           },
         }}
         fontSize="$sm"
       >
-        Didn't receive the OTP?
+        Didn't receive the OTP?{" "}
       </Text>
-      <Link
-        href=""
-        sx={{
-          _text: {
-            color: "$primary500",
-            textDecorationLine: "none",
-            ":hover": { color: "$primary600" },
-            fontWeight: "$bold",
-          },
-        }}
-      >
+      <Link href="">
         <LinkText fontSize="$sm">RESEND OTP</LinkText>
       </Link>
     </HStack>
@@ -292,7 +248,6 @@ type OTPSchemaType = z.infer<typeof OTPSchema>;
 export default function OtpVerification() {
   const {
     formState: { errors },
-    handleSubmit,
     reset,
   } = useForm<OTPSchemaType>({
     resolver: zodResolver(OTPSchema),
@@ -338,11 +293,7 @@ export default function OtpVerification() {
         router.replace("/create-password");
         setValidationError(null);
 
-        return (
-          <Toast nativeID={id} variant="accent" action="success">
-            <ToastTitle>OTP sent successfully</ToastTitle>
-          </Toast>
-        );
+        return <></>;
       },
     });
     reset();
@@ -372,13 +323,10 @@ export default function OtpVerification() {
         <SideContainerWeb />
       </Box>
       <Box
+        bg="$backgroundLight0"
         sx={{
           "@md": {
-            py: "$8",
-            px: "$8",
-          },
-          _light: {
-            bg: "$backgroundLight0",
+            p: "$8",
           },
           _dark: {
             bg: "$backgroundDark800",
@@ -387,47 +335,47 @@ export default function OtpVerification() {
         py="$8"
         px="$4"
         flex={1}
+        maxWidth="$508"
       >
-        <Box>
-          <MainText />
-          <VStack space="md" mt="$6">
-            <FormControl>
-              <PinInput
-                refList={refList}
-                setInputFocus={setInputFocus}
-                focusedIndex={inputFocus}
-                otpInput={otpInput}
-                setOtpInput={setOtpInput}
-              />
-              {validationError && (
-                <Text fontSize="$sm" color="$red700">
-                  {validationError}
-                </Text>
-              )}
-              <FormControlHelperText mt="$8">
-                <ResendLink />
-              </FormControlHelperText>
+        <MainText />
+        <VStack space="md" mt="$6">
+          <FormControl>
+            <PinInput
+              refList={refList}
+              setInputFocus={setInputFocus}
+              focusedIndex={inputFocus}
+              otpInput={otpInput}
+              setOtpInput={setOtpInput}
+            />
+            {validationError && (
+              <Text fontSize="$sm" color="$error700">
+                {validationError}
+              </Text>
+            )}
+            <FormControlHelperText mt="$8">
+              <ResendLink />
+            </FormControlHelperText>
 
-              <FormControlError>
-                <FormControlErrorIcon as={AlertTriangle} size="md" />
-                <FormControlErrorText>
-                  {errors?.OTP?.message}
-                </FormControlErrorText>
-              </FormControlError>
-            </FormControl>
+            <FormControlError>
+              <FormControlErrorIcon as={AlertTriangle} size="md" />
+              <FormControlErrorText>
+                {errors?.OTP?.message}
+              </FormControlErrorText>
+            </FormControlError>
+          </FormControl>
 
-            <Button
-              size="lg"
-              variant="solid"
-              action="primary"
-              isDisabled={false}
-              isFocusVisible={false}
-              onPress={() => onSubmit()}
-            >
-              <ButtonText fontSize="$sm">PROCEED </ButtonText>
-            </Button>
-          </VStack>
-        </Box>
+          <Button
+            size="lg"
+            variant="solid"
+            action="primary"
+            isDisabled={false}
+            isFocusVisible={false}
+            onPress={() => onSubmit()}
+          >
+            <ButtonText fontSize="$sm">PROCEED </ButtonText>
+          </Button>
+        </VStack>
+
         <AccountLink />
       </Box>
     </GuestLayout>

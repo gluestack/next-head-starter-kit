@@ -37,7 +37,9 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+
 import { Keyboard } from "react-native";
+
 import { AlertTriangle, EyeIcon, EyeOffIcon } from "lucide-react-native";
 
 import { GoogleIcon, FacebookIcon } from "./assets/Icons/Social";
@@ -88,7 +90,6 @@ const SignInForm = () => {
         );
       },
     });
-
     reset();
     // router.push('/dashboard');
   };
@@ -180,16 +181,13 @@ const SignInForm = () => {
                   type={showPassword ? "text" : "password"}
                 />
                 <InputSlot onPress={handleState} pr="$3">
-                  <InputIcon
-                    as={showPassword ? EyeIcon : EyeOffIcon}
-                    color="$textDark400"
-                  />
+                  <InputIcon as={showPassword ? EyeIcon : EyeOffIcon} />
                 </InputSlot>
               </Input>
             )}
           />
           <FormControlError>
-            <FormControlErrorIcon as={AlertTriangle} size="md" />
+            <FormControlErrorIcon as={AlertTriangle} size="sm" />
             <FormControlErrorText>
               {errors?.password?.message}
             </FormControlErrorText>
@@ -198,19 +196,8 @@ const SignInForm = () => {
           <FormControlHelper></FormControlHelper>
         </FormControl>
       </VStack>
-      <Link href="/forgot-password" ml="auto">
-        <LinkText
-          fontSize="$sm"
-          sx={{
-            "@md": { fontSize: "$xs" },
-            color: "$primary500",
-            textDecorationLine: "none",
-            ":hover": { color: "$primary600" },
-            fontWeight: "$bold",
-          }}
-        >
-          Forgot password?
-        </LinkText>
+      <Link  href="/forgot-password" ml="auto">
+        <LinkText fontSize="$xs">Forgot password?</LinkText>
       </Link>
       <Controller
         name="rememberme"
@@ -228,15 +215,7 @@ const SignInForm = () => {
             <CheckboxIndicator mr="$2">
               <CheckboxIcon as={CheckIcon} />
             </CheckboxIndicator>
-            <CheckboxLabel>
-              <Text
-                pl="$3"
-                sx={{ _dark: { color: "$warmGray400" } }}
-                fontSize="$sm"
-              >
-                Remember me and keep me logged in
-              </Text>
-            </CheckboxLabel>
+            <CheckboxLabel>Remember me and keep me logged in</CheckboxLabel>
           </Checkbox>
         )}
       />
@@ -244,7 +223,6 @@ const SignInForm = () => {
         variant="solid"
         size="lg"
         mt="$5"
-        sx={{ "@md": { mt: "$3" } }}
         onPress={handleSubmit(onSubmit)}
       >
         <ButtonText fontSize="$sm"> SIGN IN</ButtonText>
@@ -255,7 +233,13 @@ const SignInForm = () => {
 
 function SideContainerWeb() {
   return (
-    <Center flex={1} bg="$primary500">
+    <Center
+      flex={1}
+      bg="$primary500"
+      sx={{
+        _dark: { bg: "$primary500" },
+      }}
+    >
       <Image
         w="$80"
         h="$10"
@@ -272,14 +256,22 @@ function MobileHeader() {
     <VStack px="$3" mt="$4.5" space="md">
       <HStack space="md" alignItems="center">
         <Link>
-          <Icon as={ArrowLeftIcon} color="$textLight50" />
+          <Icon
+            as={ArrowLeftIcon}
+            color="$textLight50"
+            sx={{ _dark: { color: "$textDark50" } }}
+          />
         </Link>
-        <Text color="$textLight50" fontSize="$lg">
+        <Text
+          color="$textLight50"
+          sx={{ _dark: { color: "$textDark50" } }}
+          fontSize="$lg"
+        >
           Sign In
         </Text>
       </HStack>
       <VStack space="xs" ml="$1" my="$4">
-        <Heading fontSize="$3xl" color="$textLight50" fontWeight="$bold">
+        <Heading color="$textLight50" sx={{ _dark: { color: "$textDark50" } }}>
           Welcome back
         </Heading>
         <Text
@@ -317,15 +309,17 @@ const Main = () => {
         py="$8"
         flex={1}
         bg="$backgroundLight0"
+        justifyContent="space-between"
         borderTopLeftRadius="$2xl"
         borderTopRightRadius="$2xl"
+        borderBottomRightRadius="$none"
       >
         <Heading
-          fontSize="$2xl"
-          color="$textLight800"
-          sx={{ "@md": { display: "flex" }, _dark: { color: "$textDark50" } }}
-          mb="$8"
           display="none"
+          mb="$8"
+          sx={{
+            "@md": { display: "flex", fontSize: "$2xl" },
+          }}
         >
           Sign in to continue
         </Heading>
@@ -337,7 +331,7 @@ const Main = () => {
             sx={{ _dark: { bg: "$backgroundDark700" } }}
           />
           <Text
-            fontWeight="medium"
+            fontWeight="$medium"
             color="$textLight400"
             sx={{ _dark: { color: "$textDark300" } }}
           >
@@ -379,34 +373,14 @@ const Main = () => {
           mt="auto"
         >
           <Text
-            fontSize="$sm"
-            fontWeight="$normal"
             color="$textLight500"
+            fontSize="$sm"
             sx={{ _dark: { color: "$textDark400" } }}
           >
             Don't have an account?
           </Text>
-          <Link
-            href="/signup"
-            sx={{
-              _text: {
-                textDecorationLine: "none",
-                ":hover": { color: "$primary600" },
-                fontWeight: "$bold",
-              },
-            }}
-          >
-            <LinkText
-              fontSize="$sm"
-              sx={{
-                "@md": {
-                  fontSize: "$xs",
-                },
-              }}
-              color="$primary500"
-            >
-              Sign up
-            </LinkText>
+          <Link href="/signup">
+            <LinkText fontSize="$sm">Sign up</LinkText>
           </Link>
         </HStack>
       </Box>
@@ -420,7 +394,10 @@ export default function SignIn() {
       <Box display="none" sx={{ "@md": { display: "flex" } }} flex={1}>
         <SideContainerWeb />
       </Box>
-      <Main />
+
+      <Box flex={1}>
+        <Main />
+      </Box>
     </GuestLayout>
   );
 }

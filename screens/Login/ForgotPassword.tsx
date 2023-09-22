@@ -22,10 +22,13 @@ import {
   Heading,
   Center,
 } from "@gluestack-ui/themed";
+
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+
 import { Keyboard } from "react-native";
+
 import { AlertTriangle } from "lucide-react-native";
 
 import GuestLayout from "../../layouts/GuestLayout";
@@ -41,9 +44,18 @@ function Header() {
   return (
     <HStack space="md" px="$3" py="$4.5" alignItems="center">
       <Link>
-        <Icon size="md" as={ArrowLeftIcon} color="$textLight50" />
+        <Icon
+          size="md"
+          as={ArrowLeftIcon}
+          color="$textLight50"
+          sx={{ _dark: { color: "$textDark50" } }}
+        />
       </Link>
-      <Text color="$textLight50" fontSize="$lg">
+      <Text
+        color="$textLight50"
+        fontSize="$lg"
+        sx={{ _dark: { color: "$textDark50" } }}
+      >
         Forgot Password
       </Text>
     </HStack>
@@ -53,9 +65,6 @@ function Header() {
 function SideContainerWeb() {
   return (
     <Center
-      pt="$9"
-      pb="$12"
-      px="$4"
       sx={{
         "@base": {
           _light: { bg: "$backgroundLight0" },
@@ -65,14 +74,13 @@ function SideContainerWeb() {
           flex: 1,
           _light: { bg: "$primary500" },
           _dark: { bg: "$primary500" },
-          py: "190px",
-          px: "50px",
+          py: "$48",
         },
       }}
     >
       <Image
         resizeMode="contain"
-        w="$80"
+        w="$200"
         h="$40"
         source={require("./assets/images/forgotPassword_web_dark.png")}
         alt="Alternate Text"
@@ -187,6 +195,7 @@ export default function ForgotPassword() {
           <SideContainerWeb />
         </Box>
         <Box
+          maxWidth="$508"
           pt="$0"
           pb="$8"
           px="$4"
@@ -200,99 +209,85 @@ export default function ForgotPassword() {
             _dark: { bg: "$backgroundDark800" },
           }}
         >
-          <Box flex={1} justifyContent="space-between">
-            <Box>
-              <VStack
-                space="md"
-                alignItems="center"
-                sx={{ "@md": { alignItems: "flex-start" } }}
-              >
-                <Heading
-                  fontSize="$xl"
-                  color="$textLight800"
-                  textAlign="center"
-                  sx={{
-                    "@md": {
-                      textAlign: "left",
-                      fontSize: "$2xl",
-                    },
-                    _dark: { color: "$textDark50" },
-                  }}
-                >
-                  Forgot Password?
-                </Heading>
-                <Text
-                  color="$textLight800"
-                  fontSize="$sm"
-                  fontWeight="normal"
-                  textAlign="center"
-                  sx={{
-                    "@md": {
-                      textAlign: "left",
-                    },
-                    _dark: { color: "$textDark400" },
-                  }}
-                >
-                  Not to worry! Enter email address associated with your account
-                  and we'll send a link to reset your password.
-                </Text>
-              </VStack>
-              <VStack space="sm" mt="$9">
-                <FormControl
-                  mb="$8"
-                  isInvalid={
-                    (!!errors.email || isEmailFocused) && !!errors.email
+          <VStack
+            space="md"
+            alignItems="center"
+            sx={{ "@md": { alignItems: "flex-start" } }}
+          >
+            <Heading
+              fontSize="$xl"
+              textAlign="center"
+              sx={{
+                "@md": {
+                  textAlign: "left",
+                  fontSize: "$2xl",
+                },
+              }}
+            >
+              Forgot Password?
+            </Heading>
+
+            <Text
+              fontSize="$sm"
+              fontWeight="normal"
+              textAlign="center"
+              sx={{
+                "@md": {
+                  textAlign: "left",
+                },
+              }}
+            >
+              Not to worry! Enter email address associated with your account and
+              we'll send a link to reset your password.
+            </Text>
+          </VStack>
+
+          <FormControl
+            my="$8"
+            isInvalid={(!!errors.email || isEmailFocused) && !!errors.email}
+            isRequired={true}
+          >
+            <Controller
+              defaultValue=""
+              name="email"
+              control={control}
+              rules={{
+                validate: async (value) => {
+                  try {
+                    await forgotPasswordSchema.parseAsync({
+                      email: value,
+                    });
+                    return true;
+                  } catch (error: any) {
+                    return error.message;
                   }
-                  isRequired={true}
-                >
-                  <Controller
-                    defaultValue=""
-                    name="email"
-                    control={control}
-                    rules={{
-                      validate: async (value) => {
-                        try {
-                          await forgotPasswordSchema.parseAsync({
-                            email: value,
-                          });
-                          return true;
-                        } catch (error: any) {
-                          return error.message;
-                        }
-                      },
-                    }}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                      <Input>
-                        <InputField
-                          fontSize="$sm"
-                          placeholder="Email"
-                          type="text"
-                          value={value}
-                          onChangeText={onChange}
-                          onBlur={onBlur}
-                          onSubmitEditing={handleKeyPress}
-                          returnKeyType="done"
-                        />
-                      </Input>
-                    )}
+                },
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Input>
+                  <InputField
+                    fontSize="$sm"
+                    placeholder="Email"
+                    type="text"
+                    value={value}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    onSubmitEditing={handleKeyPress}
+                    returnKeyType="done"
                   />
-                  <FormControlError>
-                    <FormControlErrorIcon as={AlertTriangle} size="md" />
-                    <FormControlErrorText>
-                      {errors?.email?.message}
-                    </FormControlErrorText>
-                  </FormControlError>
-                </FormControl>
-                <Button
-                  variant="solid"
-                  size="lg"
-                  onPress={handleSubmit(onSubmit)}
-                >
-                  <ButtonText fontSize="$sm">SUBMIT</ButtonText>
-                </Button>
-              </VStack>
-            </Box>
-          </Box>
+                </Input>
+              )}
+            />
+            <FormControlError>
+              <FormControlErrorIcon as={AlertTriangle} size="md" />
+              <FormControlErrorText>
+                {errors?.email?.message}
+              </FormControlErrorText>
+            </FormControlError>
+          </FormControl>
+          <Button variant="solid" size="md" onPress={handleSubmit(onSubmit)}>
+            <ButtonText fontSize="$sm">SUBMIT</ButtonText>
+          </Button>
         </Box>
       </VStack>
     </GuestLayout>
