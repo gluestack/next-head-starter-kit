@@ -16,7 +16,7 @@
   "dependencies": {
     "@expo/html-elements": "latest",
     "@gluestack-style/react": "^0.2.40",
-    "@gluestack-ui/themed": "^0.1.44",
+    "@gluestack-ui/themed": "^0.1.50",
     "@gluestack/ui-next-adapter": "latest",
     "@hookform/resolvers": "^3.1.0",
     "@legendapp/motion": "latest",
