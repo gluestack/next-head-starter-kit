@@ -15,8 +15,9 @@
   },
   "dependencies": {
     "@expo/html-elements": "latest",
-    "@gluestack-style/react": "^0.2.40",
-    "@gluestack-ui/themed": "^0.1.44",
+    "@gluestack-style/react": "^0.2.53-alpha.8",
+    "@gluestack-ui/config": "^0.1.0",
+    "@gluestack-ui/themed": "^0.2.0-alpha.1",
     "@gluestack/ui-next-adapter": "latest",
     "@hookform/resolvers": "^3.1.0",
     "@legendapp/motion": "latest",
@@ -34,6 +35,6 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@types/react-native": "^0.72.2"
+    "prop-types": "^15.8.1"
   }
 }
