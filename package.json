@@ -15,10 +15,9 @@
   },
   "dependencies": {
     "@expo/html-elements": "latest",
-    "@gluestack-style/animation-resolver": "^0.1.0-alpha.0",
-    "@gluestack-style/react": "^0.2.54-alpha.2",
-    "@gluestack-ui/config": "^0.1.0",
-    "@gluestack-ui/themed": "^0.2.0-alpha.9",
+    "@gluestack-style/animation-resolver": "^1.0.0",
+    "@gluestack-style/react": "latest",
+    "@gluestack-ui/themed": "latest",
     "@gluestack/ui-next-adapter": "latest",
     "@hookform/resolvers": "^3.1.0",
     "@legendapp/motion": "latest",
