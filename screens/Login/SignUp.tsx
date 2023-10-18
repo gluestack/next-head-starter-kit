@@ -31,9 +31,10 @@ import {
   ArrowLeftIcon,
   InputField,
   InputSlot,
+  Link,
 } from "@gluestack-ui/themed";
 
-import { Link } from "react-native-web-next-link";
+import { Link as RNLink } from "react-native-web-next-link";
 import { Controller, useForm } from "react-hook-form";
 
 import { z } from "zod";
@@ -97,13 +98,13 @@ function MobileHeader() {
   return (
     <VStack px="$3" mt="$4.5" mb="$5" space="md">
       <HStack space="md" alignItems="center">
-        <Link href="#">
+        <RNLink href="#">
           <Icon
             as={ArrowLeftIcon}
             color="$textLight50"
             sx={{ _dark: { color: "$textDark50" } }}
           />
-        </Link>
+        </RNLink>
         <Text
           color="$textLight50"
           sx={{ _dark: { color: "$textDark50" } }}
@@ -341,7 +342,7 @@ const SignUpForm = () => {
               }}
             >
               I accept the{" "}
-              <Link href="#">
+              <RNLink href="#">
                 <LinkText
                   sx={{
                     _ios: {
@@ -354,9 +355,9 @@ const SignUpForm = () => {
                 >
                   Terms of Use
                 </LinkText>
-              </Link>{" "}
+              </RNLink>{" "}
               &{" "}
-              <Link href="#">
+              <RNLink href="#">
                 <LinkText
                   sx={{
                     _ios: {
@@ -369,7 +370,7 @@ const SignUpForm = () => {
                 >
                   Privacy Policy
                 </LinkText>
-              </Link>
+              </RNLink>
             </CheckboxLabel>
           </Checkbox>
         )}
@@ -481,9 +482,9 @@ function SignUpFormComponent() {
           >
             Already have an account?
           </Text>
-          <Link href="/login">
+          <RNLink href="/login">
             <LinkText fontSize="$sm">Sign In</LinkText>
-          </Link>
+          </RNLink>
         </HStack>
       </Box>
     </>

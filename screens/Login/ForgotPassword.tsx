@@ -22,7 +22,7 @@ import {
   Center,
 } from "@gluestack-ui/themed";
 
-import { Link } from "react-native-web-next-link";
+import { Link as RNLink } from "react-native-web-next-link";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -43,14 +43,14 @@ type forgotPasswordSchemaType = z.infer<typeof forgotPasswordSchema>;
 function Header() {
   return (
     <HStack space="md" px="$3" py="$4.5" alignItems="center">
-      <Link href="#">
+      <RNLink href="#">
         <Icon
           size="md"
           as={ArrowLeftIcon}
           color="$textLight50"
           sx={{ _dark: { color: "$textDark50" } }}
         />
-      </Link>
+      </RNLink>
       <Text
         color="$textLight50"
         fontSize="$lg"

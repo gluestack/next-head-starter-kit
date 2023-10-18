@@ -31,9 +31,10 @@ import {
   Heading,
   LinkText,
   InputSlot,
+  Link,
 } from "@gluestack-ui/themed";
 
-import { Link } from "react-native-web-next-link";
+import { Link as RNLink } from "react-native-web-next-link";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -196,9 +197,9 @@ const SignInForm = () => {
           <FormControlHelper></FormControlHelper>
         </FormControl>
       </VStack>
-      <Link href="/forgot-password" ml="auto">
+      <RNLink href="/forgot-password" ml="auto">
         <LinkText fontSize="$xs">Forgot password?</LinkText>
-      </Link>
+      </RNLink>
       <Controller
         name="rememberme"
         defaultValue={false}
@@ -255,13 +256,13 @@ function MobileHeader() {
   return (
     <VStack px="$3" mt="$4.5" space="md">
       <HStack space="md" alignItems="center">
-        <Link href="#">
+        <RNLink href="#">
           <Icon
             as={ArrowLeftIcon}
             color="$textLight50"
             sx={{ _dark: { color: "$textDark50" } }}
           />
-        </Link>
+        </RNLink>
         <Text
           color="$textLight50"
           sx={{ _dark: { color: "$textDark50" } }}
@@ -379,9 +380,9 @@ const Main = () => {
           >
             Don't have an account?
           </Text>
-          <Link href="/signup">
+          <RNLink href="/signup">
             <LinkText fontSize="$sm">Sign up</LinkText>
-          </Link>
+          </RNLink>
         </HStack>
       </Box>
     </>
