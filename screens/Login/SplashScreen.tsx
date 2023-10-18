@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Box,
@@ -6,9 +8,9 @@ import {
   Image,
   Center,
   ButtonText,
-  Link,
 } from "@gluestack-ui/themed";
 
+import { Link as RNLink } from "react-native-web-next-link";
 import GuestLayout from "../../layouts/GuestLayout";
 
 // to render login and sign up buttons
@@ -36,7 +38,7 @@ function ActionButtons() {
         isFocusVisible={false}
         backgroundColor="$backgroundLight0"
       >
-        <Link href="/login">
+        <RNLink href="/login">
           <ButtonText
             fontWeight="$bold"
             textDecorationLine="none"
@@ -44,7 +46,7 @@ function ActionButtons() {
           >
             LOGIN
           </ButtonText>
-        </Link>
+        </RNLink>
       </Button>
 
       <Button
@@ -64,11 +66,11 @@ function ActionButtons() {
         isDisabled={false}
         isFocusVisible={false}
       >
-        <Link href="/signup">
+        <RNLink href="/signup">
           <ButtonText textDecorationLine="none" color="$textLight50">
             SIGN UP
           </ButtonText>
-        </Link>
+        </RNLink>
       </Button>
     </VStack>
   );

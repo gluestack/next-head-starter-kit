@@ -10,7 +10,6 @@ import {
   Center,
   FormControl,
   Input,
-  Link,
   LinkText,
   FormControlHelperText,
   InputField,
@@ -25,6 +24,7 @@ import {
   Heading,
 } from "@gluestack-ui/themed";
 
+import { Link as RNLink } from "react-native-web-next-link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -81,7 +81,7 @@ function PinInput({
             textAlign="center"
             maxLength={1}
             borderBottomWidth="$2"
-            onChangeText={(text) => {
+            onChangeText={(text: string) => {
               if (text.length === 1 && index < 5) {
                 refList[index + 1].current?.focus();
                 setInputFocus(index + 1);
@@ -107,13 +107,13 @@ function PinInput({
 function Header() {
   return (
     <HStack space="xs" px="$3" my="$4.5" alignItems="center">
-      <Link>
+      <RNLink href="#">
         <Icon
           as={ArrowLeftIcon}
           color="$textLight50"
           sx={{ _dark: { color: "$textDark50" } }}
         />
-      </Link>
+      </RNLink>
       <Text
         color="$textLight50"
         fontSize="$lg"
@@ -212,9 +212,9 @@ function AccountLink() {
       >
         Already have an account?
       </Text>
-      <Link href="/login">
+      <RNLink href="/login">
         <LinkText fontSize="$sm">Sign In</LinkText>
-      </Link>
+      </RNLink>
     </HStack>
   );
 }
@@ -232,9 +232,9 @@ function ResendLink() {
       >
         Didn't receive the OTP?{" "}
       </Text>
-      <Link href="">
+      <RNLink href="#">
         <LinkText fontSize="$sm">RESEND OTP</LinkText>
-      </Link>
+      </RNLink>
     </HStack>
   );
 }
