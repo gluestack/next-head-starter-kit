@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Box,
@@ -6,9 +8,9 @@ import {
   Image,
   Center,
   ButtonText,
-  Link,
 } from "@gluestack-ui/themed";
 
+import { Link } from "react-native-web-next-link";
 import GuestLayout from "../../layouts/GuestLayout";
 
 // to render login and sign up buttons

@@ -6,7 +6,6 @@ import {
   Input,
   Text,
   VStack,
-  Link,
   useToast,
   Toast,
   Box,
@@ -23,6 +22,7 @@ import {
   Center,
 } from "@gluestack-ui/themed";
 
+import { Link } from "react-native-web-next-link";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -43,7 +43,7 @@ type forgotPasswordSchemaType = z.infer<typeof forgotPasswordSchema>;
 function Header() {
   return (
     <HStack space="md" px="$3" py="$4.5" alignItems="center">
-      <Link>
+      <Link href="">
         <Icon
           size="md"
           as={ArrowLeftIcon}

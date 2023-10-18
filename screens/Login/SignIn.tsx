@@ -7,7 +7,6 @@ import {
   Input,
   Text,
   VStack,
-  Link,
   useToast,
   Toast,
   Box,
@@ -34,6 +33,7 @@ import {
   InputSlot,
 } from "@gluestack-ui/themed";
 
+import { Link } from "react-native-web-next-link";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -196,7 +196,7 @@ const SignInForm = () => {
           <FormControlHelper></FormControlHelper>
         </FormControl>
       </VStack>
-      <Link  href="/forgot-password" ml="auto">
+      <Link href="/forgot-password" ml="auto">
         <LinkText fontSize="$xs">Forgot password?</LinkText>
       </Link>
       <Controller
@@ -255,7 +255,7 @@ function MobileHeader() {
   return (
     <VStack px="$3" mt="$4.5" space="md">
       <HStack space="md" alignItems="center">
-        <Link>
+        <Link href="">
           <Icon
             as={ArrowLeftIcon}
             color="$textLight50"

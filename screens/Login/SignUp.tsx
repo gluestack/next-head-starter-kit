@@ -6,7 +6,6 @@ import {
   HStack,
   VStack,
   Text,
-  Link,
   Divider,
   Icon,
   Center,
@@ -33,6 +32,8 @@ import {
   InputField,
   InputSlot,
 } from "@gluestack-ui/themed";
+
+import { Link } from "react-native-web-next-link";
 import { Controller, useForm } from "react-hook-form";
 
 import { z } from "zod";
@@ -96,7 +97,7 @@ function MobileHeader() {
   return (
     <VStack px="$3" mt="$4.5" mb="$5" space="md">
       <HStack space="md" alignItems="center">
-        <Link>
+        <Link href="">
           <Icon
             as={ArrowLeftIcon}
             color="$textLight50"
@@ -340,7 +341,7 @@ const SignUpForm = () => {
               }}
             >
               I accept the{" "}
-              <Link>
+              <Link href="">
                 <LinkText
                   sx={{
                     _ios: {
@@ -355,7 +356,7 @@ const SignUpForm = () => {
                 </LinkText>
               </Link>{" "}
               &{" "}
-              <Link>
+              <Link href="">
                 <LinkText
                   sx={{
                     _ios: {

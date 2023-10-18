@@ -25,11 +25,11 @@ import {
   FormControlErrorIcon,
   FormControlErrorText,
   InputIcon,
-  Link,
   ScrollView,
   InputSlot,
 } from "@gluestack-ui/themed";
 
+import { Link } from "react-native-web-next-link";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -83,7 +83,7 @@ export default function CreatePassword() {
     if (data.password === data.confirmpassword) {
       // Implement your own onSubmit logic and navigation logic here.
       router.replace("/login");
-      
+
       toast.show({
         placement: "bottom right",
         render: ({ id }) => {
@@ -132,7 +132,7 @@ export default function CreatePassword() {
   function Header() {
     return (
       <HStack space="md" px="$3" my="$4.5" alignItems="center">
-        <Link>
+        <Link href="">
           <Icon
             size="md"
             as={ArrowLeftIcon}
