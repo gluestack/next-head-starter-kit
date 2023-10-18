@@ -255,7 +255,7 @@ function MobileHeader() {
   return (
     <VStack px="$3" mt="$4.5" space="md">
       <HStack space="md" alignItems="center">
-        <Link href="">
+        <Link href="#">
           <Icon
             as={ArrowLeftIcon}
             color="$textLight50"
@@ -355,12 +355,12 @@ const Main = () => {
           alignItems="center"
           space="lg"
         >
-          <Link href="">
+          <Link href="#">
             <Button action="secondary" variant="link" onPress={() => {}}>
               <ButtonIcon as={FacebookIcon} size="md" />
             </Button>
           </Link>
-          <Link href="">
+          <Link href="#">
             <Button action="secondary" variant="link" onPress={() => {}}>
               <ButtonIcon as={GoogleIcon} size="md" />
             </Button>

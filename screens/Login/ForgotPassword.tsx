@@ -43,7 +43,7 @@ type forgotPasswordSchemaType = z.infer<typeof forgotPasswordSchema>;
 function Header() {
   return (
     <HStack space="md" px="$3" py="$4.5" alignItems="center">
-      <Link href="">
+      <Link href="#">
         <Icon
           size="md"
           as={ArrowLeftIcon}

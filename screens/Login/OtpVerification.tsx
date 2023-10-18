@@ -107,7 +107,7 @@ function PinInput({
 function Header() {
   return (
     <HStack space="xs" px="$3" my="$4.5" alignItems="center">
-      <Link href="">
+      <Link href="#">
         <Icon
           as={ArrowLeftIcon}
           color="$textLight50"
@@ -232,7 +232,7 @@ function ResendLink() {
       >
         Didn't receive the OTP?{" "}
       </Text>
-      <Link href="">
+      <Link href="#">
         <LinkText fontSize="$sm">RESEND OTP</LinkText>
       </Link>
     </HStack>
