@@ -2,6 +2,10 @@
 
 A comprehensive starter kit to kick-start your next mobile application using [NextJs]([https://nextjs.org/](https://expo.io/)) and [gluestack-ui]([https://ui.gluestack.io](https://ui.gluestack.io/)) - your one-stop solution for faster, smoother, and better mobile and web development.
 
+## Demo 
+
+See the live demo of this starter kit at [Demo Link](https://gluestack-ui-nextjs-head-starter-kit.vercel.app/).
+
 ## 👩‍💻 Built with
 
 - [gluestack-ui]([https://ui.gluestack.io](https://ui.gluestack.io/))
